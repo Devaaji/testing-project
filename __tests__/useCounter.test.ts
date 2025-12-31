@@ -18,9 +18,21 @@ test("CASE 3: decrements value", () => {
   expect(result.current.value).toBe(-1);
 });
 
-test("CASE 4: resets value", () => {
+test("CASE 4: handles combined actions correctly", () => {
   const { result } = renderHook(() => useCounter());
-  
+
+  act(() => {
+    result.current.increment();
+    result.current.increment();
+    result.current.decrement();
+  });
+
+  expect(result.current.value).toBe(1);
+});
+
+test("CASE 5: resets value", () => {
+  const { result } = renderHook(() => useCounter());
+
   act(() => {
     result.current.increment();
     result.current.increment();
